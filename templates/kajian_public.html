@@ -1,0 +1,90 @@
+{% extends "base.html" %} {% block title %}Kajian Harian - Masjid Al-Hikmah{%
+endblock %} {% block content %}
+<div class="container pt-5">
+  <div class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-primary">Kajian Harian</h2>
+        <p class="lead text-muted">
+          Jadwal kajian dan pembelajaran Islam di Masjid Al-Hikmah
+        </p>
+      </div>
+
+      <!-- Search -->
+      <div class="row justify-content-center mb-4">
+        <div class="col-md-6">
+          <form method="GET" class="d-flex">
+            <input
+              type="text"
+              class="form-control"
+              name="search"
+              placeholder="Cari berdasarkan nama ustaz atau hari..."
+              value="{{ search_query }}"
+            />
+            <button type="submit" class="btn btn-primary ms-2">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Kajian List -->
+      {% if kajian_list %}
+      <div class="row">
+        {% for kajian in kajian_list %}
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm hover-shadow">
+            <div class="card-body">
+              <div
+                class="d-flex justify-content-between align-items-start mb-3"
+              >
+                <span class="badge bg-primary">{{ kajian[3] }}</span>
+                <small class="text-muted">{{ kajian[4] }}</small>
+              </div>
+
+              <h5 class="card-title fw-bold">{{ kajian[2] }}</h5>
+              <h6 class="text-primary mb-3">
+                <i class="fas fa-user me-2"></i>{{ kajian[1] }}
+              </h6>
+
+              <div class="kajian-details">
+                <p class="mb-2">
+                  <i class="fas fa-calendar-day me-2 text-muted"></i>
+                  <strong>{{ kajian[3] }}</strong>
+                </p>
+                <p class="mb-2">
+                  <i class="fas fa-clock me-2 text-muted"></i>
+                  {{ kajian[5] }} WIB
+                </p>
+                <p class="mb-0">
+                  <i class="fas fa-map-marker-alt me-2 text-muted"></i>
+                  {{ kajian[6] }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="text-center py-5">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h4 class="text-muted">Tidak ada kajian ditemukan</h4>
+        {% if search_query %}
+        <p>Tidak ada hasil untuk pencarian "{{ search_query }}"</p>
+        <a
+          href="{{ url_for('kajian_public') }}"
+          class="btn btn-outline-primary"
+        >
+          <i class="fas fa-arrow-left me-2"></i>Lihat Semua Kajian
+        </a>
+        {% else %}
+        <p>Belum ada kajian yang dijadwalkan</p>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Login Admin - Masjid Al-Hikmah{%
+endblock %} {% block content %}
+<div class="container pt-5">
+  <div class="row justify-content-center min-vh-75 align-items-center">
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-lg border-0">
+        <div class="card-body p-5">
+          <div class="text-center mb-4">
+            <i class="fas fa-user-shield text-primary fa-3x mb-3"></i>
+            <h3 class="fw-bold text-primary">Login Admin</h3>
+            <p class="text-muted">Masuk untuk mengelola kajian</p>
+          </div>
+
+          <form method="POST">
+            <div class="mb-3">
+              <label for="username" class="form-label fw-semibold"
+                >Username</label
+              >
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-user"></i>
+                </span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  name="username"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="password" class="form-label fw-semibold"
+                >Password</label
+              >
+              <div class="input-group">
+                <span class="input-group-text">
+                  <i class="fas fa-lock"></i>
+                </span>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  required
+                />
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100 mb-3">
+              <i class="fas fa-sign-in-alt me-2"></i>Login
+            </button>
+          </form>
+
+          <div class="text-center">
+            <small class="text-muted">
+              <i class="fas fa-info-circle me-1"></i>
+              Default: admin / admin123
+            </small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

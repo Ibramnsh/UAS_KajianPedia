@@ -1,0 +1,172 @@
+{% extends "base.html" %} {% block title %}Dashboard Admin - Masjid Al-Hikmah{%
+endblock %} {% block content %}
+<div class="container pt-5">
+  <div class="row">
+    <div class="col-12">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold text-primary">Dashboard Admin</h2>
+          <p class="text-muted mb-0">Kelola kajian harian Masjid Al-Hikmah</p>
+        </div>
+        <a href="{{ url_for('add_kajian') }}" class="btn btn-primary">
+          <i class="fas fa-plus me-2"></i>Tambah Kajian
+        </a>
+      </div>
+
+      <!-- Search -->
+      <div class="row mb-4">
+        <div class="col-md-6">
+          <form method="GET" class="search-container">
+            <input
+              type="text"
+              class="form-control"
+              name="search"
+              placeholder="Cari berdasarkan nama ustaz atau hari..."
+              value="{{ search_query }}"
+            />
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Kajian List -->
+      {% if kajian_list %}
+      <div class="row">
+        {% for kajian in kajian_list %}
+        <div class="col-lg-6 col-xl-4 mb-4">
+          <div class="card h-100 border-0 shadow-sm card-hover">
+            <div class="card-body">
+              <div
+                class="d-flex justify-content-between align-items-start mb-3"
+              >
+                <span class="badge bg-primary">{{ kajian[3] }}</span>
+                <div class="dropdown">
+                  <button
+                    class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                  >
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="{{ url_for('edit_kajian', id=kajian[0]) }}"
+                      >
+                        <i class="fas fa-edit me-2"></i>Edit
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item text-danger"
+                        href="{{ url_for('delete_kajian', id=kajian[0]) }}"
+                        onclick="return confirm('Yakin hapus kajian {{ kajian[2] }}?')"
+                      >
+                        <i class="fas fa-trash me-2"></i>Hapus
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              <h5 class="card-title fw-bold">{{ kajian[1] }}</h5>
+              <h6 class="text-primary mb-3">{{ kajian[2] }}</h6>
+
+              <div class="kajian-details">
+                <p class="mb-2">
+                  <i class="fas fa-calendar-day me-2 text-muted"></i>
+                  <strong>{{ kajian[3] }}</strong>, {{ kajian[4] }}
+                </p>
+                <p class="mb-2">
+                  <i class="fas fa-clock me-2 text-muted"></i>
+                  {{ kajian[5] }} WIB
+                </p>
+                <p class="mb-0">
+                  <i class="fas fa-map-marker-alt me-2 text-muted"></i>
+                  {{ kajian[6] }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <div class="text-center py-5">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h4 class="text-muted">Tidak ada kajian ditemukan</h4>
+        {% if search_query %}
+        <p>Tidak ada hasil untuk pencarian "{{ search_query }}"</p>
+        <a
+          href="{{ url_for('admin_dashboard') }}"
+          class="btn btn-outline-primary"
+        >
+          <i class="fas fa-arrow-left me-2"></i>Lihat Semua Kajian
+        </a>
+        {% else %}
+        <p>Belum ada kajian yang ditambahkan</p>
+        <a href="{{ url_for('add_kajian') }}" class="btn btn-primary">
+          <i class="fas fa-plus me-2"></i>Tambah Kajian Pertama
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0 pb-0">
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body text-center">
+        <div class="delete-icon">
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h4 class="fw-bold text-dark mb-3">Konfirmasi Hapus Kajian</h4>
+        <p class="text-muted mb-2">
+          Apakah Anda yakin ingin menghapus kajian ini?
+        </p>
+        <div class="bg-light p-3 rounded-3 mb-4">
+          <h6 class="fw-bold text-primary mb-1" id="deleteKajianTitle"></h6>
+          <p class="text-muted mb-0" id="deleteKajianUstaz"></p>
+        </div>
+        <p class="text-danger small mb-0">
+          <i class="fas fa-info-circle me-1"></i>
+          Tindakan ini tidak dapat dibatalkan
+        </p>
+      </div>
+      <div class="modal-footer border-0 pt-0">
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          data-bs-dismiss="modal"
+        >
+          <i class="fas fa-times me-2"></i>Batal
+        </button>
+        <a href="#" id="confirmDeleteBtn" class="btn btn-danger">
+          <i class="fas fa-trash me-2"></i>Ya, Hapus Kajian
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

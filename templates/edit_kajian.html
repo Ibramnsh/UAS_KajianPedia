@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Kajian - Masjid Al-Hikmah{% endblock %}
+
+{% block content %}
+<div class="container pt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Header -->
+            <div class="d-flex align-items-center mb-4">
+                <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-primary me-3">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <div>
+                    <h2 class="fw-bold text-primary mb-0">Edit Kajian</h2>
+                    <p class="text-muted mb-0">Perbarui informasi kajian</p>
+                </div>
+            </div>
+
+            <!-- Form -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <form method="POST">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nama_ustaz" class="form-label fw-semibold">Nama Ustaz</label>
+                                <input type="text" class="form-control" id="nama_ustaz" name="nama_ustaz" 
+                                       value="{{ kajian[1] }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="hari" class="form-label fw-semibold">Hari</label>
+                                <select class="form-select" id="hari" name="hari" required>
+                                    <option value="">Pilih Hari</option>
+                                    <option value="Senin" {% if kajian[3] == 'Senin' %}selected{% endif %}>Senin</option>
+                                    <option value="Selasa" {% if kajian[3] == 'Selasa' %}selected{% endif %}>Selasa</option>
+                                    <option value="Rabu" {% if kajian[3] == 'Rabu' %}selected{% endif %}>Rabu</option>
+                                    <option value="Kamis" {% if kajian[3] == 'Kamis' %}selected{% endif %}>Kamis</option>
+                                    <option value="Jumat" {% if kajian[3] == 'Jumat' %}selected{% endif %}>Jumat</option>
+                                    <option value="Sabtu" {% if kajian[3] == 'Sabtu' %}selected{% endif %}>Sabtu</option>
+                                    <option value="Minggu" {% if kajian[3] == 'Minggu' %}selected{% endif %}>Minggu</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tema_kajian" class="form-label fw-semibold">Tema Kajian</label>
+                            <input type="text" class="form-control" id="tema_kajian" name="tema_kajian" 
+                                   value="{{ kajian[2] }}" required>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="tanggal" class="form-label fw-semibold">Tanggal</label>
+                                <input type="date" class="form-control" id="tanggal" name="tanggal" 
+                                       value="{{ kajian[4] }}" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="waktu" class="form-label fw-semibold">Waktu</label>
+                                <input type="time" class="form-control" id="waktu" name="waktu" 
+                                       value="{{ kajian[5] }}" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="lokasi" class="form-label fw-semibold">Lokasi</label>
+                            <select class="form-select" id="lokasi" name="lokasi" required>
+                                <option value="">Pilih Lokasi</option>
+                                <option value="Ruang Utama" {% if kajian[6] == 'Ruang Utama' %}selected{% endif %}>Ruang Utama</option>
+                                <option value="Ruang Kajian" {% if kajian[6] == 'Ruang Kajian' %}selected{% endif %}>Ruang Kajian</option>
+                                <option value="Ruang Serbaguna" {% if kajian[6] == 'Ruang Serbaguna' %}selected{% endif %}>Ruang Serbaguna</option>
+                                <option value="Halaman Masjid" {% if kajian[6] == 'Halaman Masjid' %}selected{% endif %}>Halaman Masjid</option>
+                            </select>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Batal
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save me-2"></i>Perbarui Kajian
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
